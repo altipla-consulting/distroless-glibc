@@ -1,5 +1,2 @@
 
-FROM ubuntu:23.04
-
-RUN apt update && \
-    apt install -y ca-certificates tzdata curl
+FROM gcr.io/distroless/base-debian12:latest
