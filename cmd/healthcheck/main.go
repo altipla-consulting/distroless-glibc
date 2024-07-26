@@ -25,8 +25,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		client := http.DefaultClient
-		resp, err := client.Do(req)
+		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
 			os.Exit(1)
 		}
