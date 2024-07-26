@@ -17,7 +17,7 @@ FROM busybox:stable AS busybox
 
 # ==============================================================================
 
-FROM gcr.io/distroless/base-debian12:debug
+FROM gcr.io/distroless/base-debian12
 
 COPY --from=builder /workdir/healthcheck healthcheck
 COPY --from=busybox /bin/busybox /busybox/busybox
