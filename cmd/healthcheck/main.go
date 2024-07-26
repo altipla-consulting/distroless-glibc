@@ -35,7 +35,7 @@ func main() {
 	}
 
 	if flagFile != "" {
-		if _, err := os.Stat(flagFile); os.IsNotExist(err) {
+		if _, err := os.Stat(flagFile); err != nil {
 			os.Exit(1)
 		}
 	}
