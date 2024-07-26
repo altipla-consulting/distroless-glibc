@@ -9,12 +9,11 @@ import (
 )
 
 func main() {
-	var flagURL, flagFilePath string
+	var flagURL, flagFile string
 	var flagTimeout time.Duration
 	flag.StringVar(&flagURL, "url", "", "URL to check")
-	flag.StringVar(&flagFilePath, "file", "", "File path to check")
+	flag.StringVar(&flagFile, "file", "", "File path to check")
 	flag.DurationVar(&flagTimeout, "timeout", time.Second*5, "Timeout for the request")
-
 	flag.Parse()
 
 	if flagURL != "" {
@@ -35,8 +34,8 @@ func main() {
 		}
 	}
 
-	if flagFilePath != "" {
-		if _, err := os.Stat(flagFilePath); os.IsNotExist(err) {
+	if flagFile != "" {
+		if _, err := os.Stat(flagFile); os.IsNotExist(err) {
 			os.Exit(1)
 		}
 	}
