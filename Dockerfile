@@ -13,12 +13,9 @@ RUN go build -v -o healthcheck ./cmd/healthcheck
 
 # ==============================================================================
 
-FROM busybox:stable AS busybox
-
-# ==============================================================================
-
 FROM gcr.io/distroless/base-debian12
 
-COPY --from=builder /workdir/healthcheck /bin/healthcheck
-COPY --from=busybox /bin/busybox /busybox/busybox
-RUN ["/busybox/busybox", "ln", "-sf", "/busybox/busybox", "/bin/sh"]
+COPY --from=builder /workdir/healthcheck /opt/healthcheck
+COPY --from=gcr.io/distroless/base-debian12:debug /busybox/sh /bin/sh
+
+COPY healthcheck /bin/healthcheck
