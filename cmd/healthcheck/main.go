@@ -22,24 +22,24 @@ func main() {
 		defer cancel()
 		req, err := http.NewRequestWithContext(ctx, http.MethodGet, flagURL, nil)
 		if err != nil {
-			fmt.Printf("failed to prepare request: %s\n", err)
+			fmt.Printf("failed to prepare request: %s", err)
 			os.Exit(1)
 		}
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
-			fmt.Printf("failed to send healthcheck request: %s\n", err)
+			fmt.Printf("failed to send healthcheck request: %s", err)
 			os.Exit(1)
 		}
 		defer resp.Body.Close()
 		if resp.StatusCode != http.StatusOK {
-			fmt.Printf("unexpected status %v\n", resp.Status)
+			fmt.Printf("unexpected status %v", resp.Status)
 			os.Exit(1)
 		}
 	}
 
 	if flagFile != "" {
 		if _, err := os.Stat(flagFile); err != nil {
-			fmt.Printf("file %s does not exist\n", flagFile)
+			fmt.Printf("file %s does not exist", flagFile)
 			os.Exit(1)
 		}
 	}
