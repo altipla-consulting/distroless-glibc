@@ -9,9 +9,6 @@ RUN go mod download
 
 COPY cmd cmd
 
-ENV CGO_ENABLED 1
-ENV GOOS linux
-
 RUN go build -v -o healthcheck ./cmd/healthcheck
 
 # ==============================================================================

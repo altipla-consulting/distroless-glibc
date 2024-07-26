@@ -1,9 +1,8 @@
-
 name: Release
 
 on:
   release:
-    types: [ created ]
+    types: [created]
 
 jobs:
   deploy:
@@ -13,24 +12,24 @@ jobs:
       contents: read
       packages: write
     steps:
-    - name: Get the version
-      id: version
-      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      - name: Get the version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push
-      uses: docker/build-push-action@v4
-      with:
-        push: true
-        tags: |
-          ghcr.io/altipla-consulting/distroless-glibc:${{ steps.version.outputs.VERSION }}
-          ghcr.io/altipla-consulting/distroless-glibc:latest
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: |
+            ghcr.io/altipla-consulting/distroless-glibc:${{ steps.version.outputs.VERSION }}
+            ghcr.io/altipla-consulting/distroless-glibc:latest
