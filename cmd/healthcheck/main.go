@@ -4,16 +4,19 @@ import (
 	"flag"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
 	url := flag.String("url", "", "URL to check")
 	filePath := flag.String("file", "", "File path to check")
+	timeout := flag.Duration("timeout", time.Second*5, "Timeout for the request")
 
 	flag.Parse()
 
 	if *url != "" {
-		resp, err := http.Get(*url)
+		client := &http.Client{Timeout: *timeout}
+		resp, err := client.Get(*url)
 		if err != nil {
 			os.Exit(1)
 		}
