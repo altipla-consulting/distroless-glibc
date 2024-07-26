@@ -9,4 +9,4 @@ lint:
 gofmt:
 	@gofmt -s -w $(FILES)
 	@gofmt -r '&α{} -> new(α)' -w $(FILES)
-	@impsort . -p github.com/altipla-consulting/onetbooking-hub
+	@impsort . -p github.com/altipla-consulting/distroless-glibc

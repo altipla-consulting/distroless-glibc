@@ -2,21 +2,15 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 )
 
 func main() {
-	url := flag.String("url", "http://localhost:8080", "URL to check")
-	filePath := flag.String("file", "/file/path", "File path to check")
+	url := flag.String("url", "", "URL to check")
+	filePath := flag.String("file", "", "File path to check")
 
 	flag.Parse()
-
-	if *url == "" && *filePath == "" {
-		fmt.Println("Need URL or file path to check.")
-		os.Exit(1)
-	}
 
 	if *url != "" {
 		resp, err := http.Get(*url)

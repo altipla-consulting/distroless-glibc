@@ -1,5 +1,5 @@
 
-FROM golang:1.21 AS builder
+FROM golang:1.22 AS builder
 
 WORKDIR /workdir
 
@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY cmd cmd
 
-ENV CGO_ENABLED 0
+ENV CGO_ENABLED 1
 ENV GOOS linux
 
 RUN go build -v -o healthcheck ./cmd/healthcheck
