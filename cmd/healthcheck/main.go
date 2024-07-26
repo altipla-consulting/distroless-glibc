@@ -1,19 +1,31 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
-	url := flag.String("url", "", "URL to check")
-	filePath := flag.String("file", "", "File path to check")
+	var flagURL, flagFilePath string
+	var flagTimeout time.Duration
+	flag.StringVar(&flagURL, "url", "", "URL to check")
+	flag.StringVar(&flagFilePath, "file", "", "File path to check")
+	flag.DurationVar(&flagTimeout, "timeout", time.Second*5, "Timeout for the request")
 
 	flag.Parse()
 
-	if *url != "" {
-		resp, err := http.Get(*url)
+	if flagURL != "" {
+		ctx, cancel := context.WithTimeout(context.Background(), flagTimeout)
+		defer cancel()
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, flagURL, nil)
+		if err != nil {
+			os.Exit(1)
+		}
+
+		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
 			os.Exit(1)
 		}
@@ -23,8 +35,8 @@ func main() {
 		}
 	}
 
-	if *filePath != "" {
-		if _, err := os.Stat(*filePath); os.IsNotExist(err) {
+	if flagFilePath != "" {
+		if _, err := os.Stat(flagFilePath); os.IsNotExist(err) {
 			os.Exit(1)
 		}
 	}
