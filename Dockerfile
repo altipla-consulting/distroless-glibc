@@ -13,8 +13,12 @@ RUN go build -v -o healthcheck ./cmd/healthcheck
 
 # ==============================================================================
 
-FROM gcr.io/distroless/base-debian12:latest
+FROM busybox:stable AS busybox
 
-WORKDIR /bin
+# ==============================================================================
+
+FROM gcr.io/distroless/base-debian12:debug
 
 COPY --from=builder /workdir/healthcheck healthcheck
+COPY --from=busybox /bin/busybox /busybox/busybox
+RUN ["/busybox/busybox", "ln", "-sf", "/busybox/busybox", "/bin/sh"]
