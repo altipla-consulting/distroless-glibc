@@ -17,5 +17,7 @@ FROM gcr.io/distroless/base-debian12
 
 COPY --from=builder /workdir/healthcheck /opt/healthcheck
 COPY --from=gcr.io/distroless/base-debian12:debug /busybox/sh /bin/sh
+COPY --from=gcr.io/distroless/base-debian12:debug /busybox/ls /bin/ls
+COPY --from=gcr.io/distroless/base-debian12:debug /busybox/cat /bin/cat
 
 COPY healthcheck /bin/healthcheck
