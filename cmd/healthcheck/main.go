@@ -44,5 +44,5 @@ func main() {
 		}
 	}
 
-	fmt.Println("healthy")
+	fmt.Printf("healthy")
 }
